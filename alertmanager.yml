@@ -1,0 +1,22 @@
+global:
+  smtp_smarthost: 'smtp server'         # Email SMTP server
+  smtp_from: 'sender@my_company.com'    # Your Email address
+  smtp_auth_username: 'username' 	    # Your username
+  smtp_auth_password: 'pa55w0rd' 	    # SMTP password
+
+route:
+  # Default receiver (defined below) to send alerts
+  receiver: 'email-receiver'
+
+receivers:
+  - name: 'email-receiver'
+    email_configs:
+      - to: 'notifications@my_company.com'
+
+# Optionally add inhibit rules to prevent firing redundant alerts
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['instance', 'alertname']
